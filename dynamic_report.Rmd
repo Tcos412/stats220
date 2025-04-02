@@ -27,7 +27,7 @@ h2 {text-align: center;}
 ```{r}
 
 library(tidyverse)
-library(fpp3)
+library(ggplot2)
 
 setwd('C:/Users/tadhg/Downloads')
 logged_data <- read_csv("220 Project 2 (Responses) - Form responses 1.csv")
