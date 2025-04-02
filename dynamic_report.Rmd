@@ -1,0 +1,89 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+```
+
+```{css}
+
+body {background-color: lightgrey}
+
+h1 {text-decoration-line: underline;text-decoration-color: black;}
+
+h2 {text-decoration-line: underline;text-decoration-color: black;}
+
+h1 {text-align: center;}
+
+h2 {text-align: center;}
+```
+
+## Most common cars in NZ and their origins
+
+
+```{r}
+
+library(tidyverse)
+library(fpp3)
+
+setwd('C:/Users/tadhg/Downloads')
+logged_data <- read_csv("220 Project 2 (Responses) - Form responses 1.csv")
+
+latest_data <- logged_data %>%
+  select(1:4) %>%
+  rename(continent_of_origin = "Car continent of origin")  %>%
+  rename(first_number_in_license = "First number in License Plate") %>%
+  rename(type_of_car = "Type of car") %>%
+  rename(number_of_people_inside = "Number of people inside")
+  
+paste0("mean of license plate numbers")
+
+mean(latest_data$first_number_in_license)
+
+paste("most common continent of origin")
+
+latest_data %>%
+  count(continent_of_origin) %>%
+  arrange(desc(n)) %>%
+  slice(1) %>%
+  pull(continent_of_origin)
+
+
+paste("finding the least common type of car")
+
+latest_data %>%
+  count(type_of_car) %>%
+  arrange(n) %>%
+  slice(1) %>%
+  pull(type_of_car)
+
+
+# Plot of car types by continent of origin
+
+latest_data %>%
+  ggplot(latest_data = latest_data,
+       mapping = aes(x = continent_of_origin,
+                     fill = type_of_car)) +
+  geom_bar() +
+  theme_bw() +
+  labs(title = "Car Types by Continent of Origin", 
+       x = "Continent of Origin", 
+       y = "Count",
+       fill = "Type of car")
+
+# plot of the most common car types
+
+latest_data %>%
+  ggplot(latest_data = latest_data,
+         mapping = aes(x = type_of_car)) +
+  geom_bar(fill = "lightblue") +
+  theme_bw() +
+  labs(title = "Most Common Car Types", 
+       x = "Car type", 
+       y = "Count")
+
+
+```
